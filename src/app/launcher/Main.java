@@ -11,7 +11,7 @@ import app.core.Perlin;
 public class Main {
     public static void main(String[] args) {
         try {
-            genPerlinImage("perlin.png", 1000, 1000, 60.0);
+            genColorPerlinImage("perlin.png", 1000, 1000, 187.3);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -47,7 +47,7 @@ public class Main {
                 if (rf >= thrsh && gf >= thrsh && bf >= thrsh) {
                     rgb = (0 << 16) | (255 << 8) | 0;
                 }
-                if (x % scale == 0 || y % scale == 0) {
+                if (x % (int)scale == 0 || y % (int)scale == 0) {
                     rgb = 0;
                 }
                 image.setRGB(x, y, rgb);
