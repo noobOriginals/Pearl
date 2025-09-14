@@ -1,0 +1,5 @@
+run.sh
+build
+binaries.txt
+sources.txt
+.DS_Store
