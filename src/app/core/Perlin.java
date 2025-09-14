@@ -27,7 +27,7 @@ public class Perlin {
         }
     }
 
-    public static double perlin(double x, double y, Fade fade) {
+    public static double perlin(double x, double y, PerlinUtils.Fade fade) {
         int xidx = (int)x & 255;
         int yidx = (int)y & 255;
 
@@ -39,12 +39,12 @@ public class Perlin {
         double xdiff = x - (int)x;
         double ydiff = y - (int)y;
 
-        double d0 = grad(aa, xdiff, ydiff);
-        double d1 = grad(ba, xdiff - 1.0, ydiff);
-        double d2 = grad(ab, xdiff, ydiff - 1.0);
-        double d3 = grad(bb, xdiff - 1.0, ydiff - 1.0);
+        double d0 = PerlinUtils.hashgrad(aa, xdiff, ydiff);
+        double d1 = PerlinUtils.hashgrad(ba, xdiff - 1.0, ydiff);
+        double d2 = PerlinUtils.hashgrad(ab, xdiff, ydiff - 1.0);
+        double d3 = PerlinUtils.hashgrad(bb, xdiff - 1.0, ydiff - 1.0);
 
-        return lerp(lerp(d0, d1, fade.fade(xdiff)), lerp(d2, d3, fade.fade(xdiff)), fade.fade(ydiff));
+        return PerlinUtils.lerp(PerlinUtils.lerp(d0, d1, fade.fade(xdiff)), PerlinUtils.lerp(d2, d3, fade.fade(xdiff)), fade.fade(ydiff));
     }
 
     public static double grad(int hash, double x, double y) {
@@ -68,24 +68,8 @@ public class Perlin {
 	        default: return 0;
 	    }
     }
-    public static double smoothstep(double t) {
-        return t * t * (3 - 2 * t);
-}
-    public static double fade(double t) {
-            return t * t * t * (t * (t * 6 - 15) + 10);
-    }
-    public static double cosi(double t) {
-    	return (1 - Math.cos(Math.PI * t)) / 2.0;
-    }
-    public static double quartic(double t) {
-    	return t * t * t * (2 - t);
-    }
-    public static double lerp(double a, double b, double t) {
-        return a + t * (b - a);
-    }
 
-    @FunctionalInterface
-	public interface Fade {
-		public double fade(double t);
-	}
+    public static int[] getPermutationTable() {
+        return PERMUTATION;
+    }
 }
