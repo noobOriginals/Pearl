@@ -29,7 +29,7 @@ public class PerlinUtils {
 
     public static double smoothstep(double t) {
         return t * t * (3 - 2 * t);
-}
+	}
     public static double fade(double t) {
             return t * t * t * (t * (t * 6 - 15) + 10);
     }
